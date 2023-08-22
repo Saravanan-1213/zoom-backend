@@ -13,7 +13,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["Get", "post"],
+    methods: ["Get", "Post"],
   },
 });
 
@@ -23,10 +23,6 @@ app.use(express.json());
 app.use(cors());
 dotenv.config({ path: "./.env" });
 app.use("/auth", userRouter);
-
-// const client = new MongoClient(MONGO_URL); // dial
-// await client.connect(); // calling
-// console.log("Mongo is Connected");
 
 const PORT = process.env.PORT;
 mongoose.connect(process.env.MONGO_URL, {
