@@ -4,7 +4,6 @@ import { Server } from "socket.io";
 import cors from "cors";
 import * as path from "path";
 import * as dotenv from "dotenv";
-// import { MongoClient } from "mongodb";
 import mongoose from "mongoose";
 import { userRouter } from "./routes/users.js";
 
@@ -13,7 +12,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods: ["Get", "Post"],
+    methods: ["Get", "post"],
   },
 });
 
