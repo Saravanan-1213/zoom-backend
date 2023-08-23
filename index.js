@@ -4,8 +4,8 @@ import { Server } from "socket.io";
 import cors from "cors";
 import * as path from "path";
 import * as dotenv from "dotenv";
-import mongoose from "mongoose";
-import { userRouter } from "./routes/users.js";
+import { MongoClient } from "mongodb";
+import userRouter from "./routes/user.route.js";
 
 const app = express();
 const server = http.createServer(app);
@@ -24,10 +24,13 @@ dotenv.config({ path: "./.env" });
 app.use("/auth", userRouter);
 
 const PORT = process.env.PORT;
-mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const MONGO_URL = process.env.MONGO_URL;
+
+// Database Connection
+
+const client = new MongoClient(MONGO_URL); // dial
+await client.connect(); // calling
+console.log("Mongo is Connected");
 
 io.on("connection", (socket) => {
   // sending the meeting code
@@ -87,4 +90,8 @@ if (process.env.Node_env === "production") {
   });
 }
 
-app.listen(PORT, () => console.log("Server started", PORT));
+app.listen(PORT, () => {
+  console.log("Connected! ✨✨");
+});
+
+export { client };
